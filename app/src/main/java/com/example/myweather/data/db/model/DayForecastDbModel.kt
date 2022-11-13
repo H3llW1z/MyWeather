@@ -1,8 +1,13 @@
-package com.example.myweather.domain.entity
+package com.example.myweather.data.db.model
 
-data class DailyForecast(
-    val datetime: String,
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "day_forecast")
+class DayForecastDbModel(
+    @PrimaryKey(autoGenerate = false)
     val datetimeEpoch: Int,
+    val datetime: String,
     val tempMax: Double,
     val tempMin: Double,
     val temp: Double,
@@ -25,5 +30,5 @@ data class DailyForecast(
     val moonPhase: Double,
     val conditions: String,
     val description: String,
-    val icon: String,
+    val icon: String
 )

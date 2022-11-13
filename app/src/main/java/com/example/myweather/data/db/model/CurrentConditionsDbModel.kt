@@ -1,9 +1,14 @@
-package com.example.myweather.domain.entity
+package com.example.myweather.data.db.model
 
-data class CurrentConditions(
-    val datetime: String,
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "current_condition")
+data class CurrentConditionsDbModel(
+    @PrimaryKey(autoGenerate = false)
     val datetimeEpoch: Int,
     val cityName: String,
+    val datetime: String,
     val temp: Double,
     val feelsLike: Double,
     val humidity: Double,

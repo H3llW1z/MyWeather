@@ -7,7 +7,7 @@ import retrofit2.http.Query
 
 interface ApiService {
 
-    @GET("{cityName}}/today?$QUERY_PARAM_INCLUDE=$HOURS%2C$CURRENT")
+    @GET("{cityName}/today?$QUERY_PARAM_INCLUDE=$HOURS%2C$CURRENT")
     suspend fun getCurrentAndHourlyForecast(
         @Path("cityName") cityName: String,
         @Query(QUERY_PARAM_API_KEY) apiKey: String = API_KEY,

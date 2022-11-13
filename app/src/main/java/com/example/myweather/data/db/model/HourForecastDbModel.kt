@@ -1,8 +1,14 @@
-package com.example.myweather.domain.entity
+package com.example.myweather.data.db.model
 
-data class HourlyForecast (
-    val datetime: String,
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+
+@Entity(tableName = "hour_forecast")
+class HourForecastDbModel(
+    @PrimaryKey(autoGenerate = false)
     val datetimeEpoch: Int,
+    val datetime: String,
     val temp: Double,
     val feelsLike: Double,
     val humidity: Double,
