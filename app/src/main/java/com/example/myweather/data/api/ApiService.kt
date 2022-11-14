@@ -1,6 +1,7 @@
 package com.example.myweather.data.api
 
 import com.example.myweather.data.api.model.WeatherResponse
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -13,7 +14,7 @@ interface ApiService {
         @Query(QUERY_PARAM_API_KEY) apiKey: String = API_KEY,
         @Query(QUERY_PARAM_UNIT_GROUP) unitGroup: String = UNIT_GROUP,
         @Query(QUERY_PARAM_LANGUAGE) language: String = LANGUAGE
-    ): WeatherResponse
+    ): Response<WeatherResponse>
 
     @GET("{cityName}/next7days?$QUERY_PARAM_INCLUDE=$DAYS")
     suspend fun getWeeklyForecast(
@@ -21,7 +22,7 @@ interface ApiService {
         @Query(QUERY_PARAM_API_KEY) apiKey: String = API_KEY,
         @Query(QUERY_PARAM_UNIT_GROUP) unitGroup: String = UNIT_GROUP,
         @Query(QUERY_PARAM_LANGUAGE) language: String = LANGUAGE
-    ): WeatherResponse
+    ): Response<WeatherResponse>
 
     companion object {
         private const val QUERY_PARAM_API_KEY = "key"

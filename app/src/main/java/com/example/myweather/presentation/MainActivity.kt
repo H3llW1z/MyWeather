@@ -18,21 +18,5 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val scope = CoroutineScope(Dispatchers.IO)
-        val repository = WeatherRepositoryImpl(application)
-        val loadDataUseCase = LoadDataUseCase(repository)
-        val getCurrentForecastUseCase = GetCurrentForecastUseCase(repository)
-        val getWeeklyForecastUseCase = GetWeeklyForecastUseCase(repository)
-        val getTodayHourlyForecastUseCase = GetTodayHourlyForecastUseCase(repository)
-
-        val liveData = getWeeklyForecastUseCase()
-        liveData.observe(this){
-            if (it != null) {
-                Log.i("LIVE", it.toString())
-            }
-        }
-        scope.launch {
-            loadDataUseCase("Moscow")
-        }
     }
 }
