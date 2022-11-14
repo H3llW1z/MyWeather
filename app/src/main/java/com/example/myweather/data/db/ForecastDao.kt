@@ -1,5 +1,6 @@
 package com.example.myweather.data.db
 
+import androidx.lifecycle.LiveData
 import androidx.room.Transaction
 import androidx.room.Dao
 import androidx.room.Insert
@@ -12,13 +13,13 @@ import com.example.myweather.data.db.model.HourForecastDbModel
 @Dao
 interface ForecastDao {
     @Query("SELECT * FROM current_condition LIMIT 1")
-    fun getCurrentCondition(): CurrentConditionsDbModel
+    fun getCurrentCondition(): LiveData<CurrentConditionsDbModel>
 
     @Query("SELECT * FROM hour_forecast ORDER BY datetimeEpoch ASC")
-    fun getForecastForToday(): List<HourForecastDbModel>
+    fun getForecastForToday(): LiveData<List<HourForecastDbModel>>
 
     @Query("SELECT * FROM day_forecast ORDER BY datetimeEpoch ASC")
-    fun getForecastForWeek(): List<DayForecastDbModel>
+    fun getForecastForWeek(): LiveData<List<DayForecastDbModel>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCurrentCondition(data: CurrentConditionsDbModel)

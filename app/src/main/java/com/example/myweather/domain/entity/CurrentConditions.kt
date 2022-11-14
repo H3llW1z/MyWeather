@@ -3,6 +3,7 @@ package com.example.myweather.domain.entity
 data class CurrentConditions(
     val datetime: String,
     val datetimeEpoch: Int,
+    val dayOfWeek: String,
     val cityName: String,
     val temp: Double,
     val feelsLike: Double,

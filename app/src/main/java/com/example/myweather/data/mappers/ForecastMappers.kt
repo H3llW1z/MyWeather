@@ -9,6 +9,8 @@ import com.example.myweather.data.db.model.HourForecastDbModel
 import com.example.myweather.domain.entity.CurrentConditions
 import com.example.myweather.domain.entity.DailyForecast
 import com.example.myweather.domain.entity.HourlyForecast
+import java.text.SimpleDateFormat
+import java.util.*
 
 class ForecastMappers {
     companion object {
@@ -88,6 +90,10 @@ class ForecastMappers {
             )
         }
 
+        private fun getDayOfWeek(timestamp: Int): String {
+            return SimpleDateFormat("EE", Locale.getDefault()).format(timestamp * 1000)
+        }
+
         fun CurrentConditionsDbModel.toEntity(): CurrentConditions {
             return CurrentConditions(
                 datetime = datetime,
@@ -109,7 +115,8 @@ class ForecastMappers {
                 sunrise = sunrise,
                 sunset = sunset,
                 moonPhase = moonPhase,
-                cityName = cityName
+                cityName = cityName,
+                dayOfWeek = getDayOfWeek(datetimeEpoch)
             )
         }
 
@@ -139,7 +146,8 @@ class ForecastMappers {
                 moonPhase = moonPhase,
                 conditions = conditions,
                 description = description,
-                icon = icon
+                icon = icon,
+                dayOfWeek = getDayOfWeek(datetimeEpoch)
             )
         }
 
@@ -164,4 +172,5 @@ class ForecastMappers {
             )
         }
     }
+
 }

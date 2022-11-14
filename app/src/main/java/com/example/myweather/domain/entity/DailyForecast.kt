@@ -3,6 +3,7 @@ package com.example.myweather.domain.entity
 data class DailyForecast(
     val datetime: String,
     val datetimeEpoch: Int,
+    val dayOfWeek: String,
     val tempMax: Double,
     val tempMin: Double,
     val temp: Double,
