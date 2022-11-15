@@ -8,7 +8,7 @@ data class DayDto (
     val datetime: String? = null,
 
     @SerializedName("datetimeEpoch")
-    val datetimeEpoch: Int = 0,
+    val datetimeEpoch: Long = 0,
 
     @SerializedName("tempmax")
     val tempMax: Double = 0.0,

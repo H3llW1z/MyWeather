@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "hour_forecast")
 class HourForecastDbModel(
     @PrimaryKey(autoGenerate = false)
-    val datetimeEpoch: Int,
+    val datetimeEpoch: Long,
     val datetime: String,
     val temp: Double,
     val feelsLike: Double,

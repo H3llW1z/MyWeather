@@ -2,7 +2,7 @@ package com.example.myweather.domain.entity
 
 data class HourlyForecast (
     val datetime: String,
-    val datetimeEpoch: Int,
+    val datetimeEpoch: Long,
     val temp: Double,
     val feelsLike: Double,
     val humidity: Double,

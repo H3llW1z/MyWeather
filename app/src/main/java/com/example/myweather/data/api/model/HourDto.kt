@@ -10,7 +10,7 @@ data class HourDto (
     var datetime: String? = null,
 
     @SerializedName("datetimeEpoch")
-    var datetimeEpoch: Int = 0,
+    var datetimeEpoch: Long = 0,
 
     @SerializedName("temp")
     var temp:Double = 0.0,

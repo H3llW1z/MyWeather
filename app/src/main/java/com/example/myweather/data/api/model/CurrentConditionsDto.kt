@@ -8,7 +8,7 @@ data class CurrentConditionsDto(
     val datetime: String? = null,
 
     @SerializedName("datetimeEpoch")
-    val datetimeEpoch: Int = 0,
+    val datetimeEpoch: Long = 0,
 
     @SerializedName("temp")
     val temp: Double = 0.0,

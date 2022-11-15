@@ -51,7 +51,8 @@ class WeatherRepositoryImpl(application: Application) : WeatherRepository {
         try {
             val todayResponse = apiService.getCurrentAndHourlyForecast(cityName)
             if (todayResponse.isSuccessful) {
-                val currentConditions = todayResponse.body()?.currentConditions?.toDbModel(cityName)
+                val address = todayResponse.body()?.resolvedAddress ?: ""
+                val currentConditions = todayResponse.body()?.currentConditions?.toDbModel(address)
                     ?: throw RuntimeException("Current conditions requested but not exists.")
 
                 forecastDao.removeAndInsertCurrentCondition(currentConditions)

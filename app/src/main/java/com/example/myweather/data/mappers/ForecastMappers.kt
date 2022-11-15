@@ -14,7 +14,7 @@ import java.util.*
 
 class ForecastMappers {
     companion object {
-        fun CurrentConditionsDto.toDbModel(cityName: String): CurrentConditionsDbModel {
+        fun CurrentConditionsDto.toDbModel(address: String): CurrentConditionsDbModel {
             return CurrentConditionsDbModel(
                 datetimeEpoch = datetimeEpoch,
                 datetime = datetime ?: "unknown",
@@ -35,7 +35,7 @@ class ForecastMappers {
                 sunrise = sunrise ?: "unknown time",
                 sunset = sunset ?: "unknown time",
                 moonPhase = moonPhase,
-                cityName = cityName
+                address = address
             )
         }
 
@@ -90,33 +90,27 @@ class ForecastMappers {
             )
         }
 
-        private fun getDayOfWeek(timestamp: Int): String {
+        private fun getDayOfWeek(timestamp: Long): String {
             return SimpleDateFormat("EE", Locale.getDefault()).format(timestamp * 1000)
         }
 
         fun CurrentConditionsDbModel.toEntity(): CurrentConditions {
             return CurrentConditions(
-                datetime = datetime,
                 datetimeEpoch = datetimeEpoch,
                 temp = temp,
                 feelsLike = feelsLike,
                 humidity = humidity,
-                dew = dew,
                 precip = precip,
                 precipProb = precipProb,
                 windSpeed = windSpeed,
-                windDir = windDir,
                 pressure = pressure,
                 visibility = visibility,
-                cloudCover = cloudCover,
                 uvIndex = uvIndex,
                 conditions = conditions,
                 icon = icon,
                 sunrise = sunrise,
                 sunset = sunset,
-                moonPhase = moonPhase,
-                cityName = cityName,
-                dayOfWeek = getDayOfWeek(datetimeEpoch)
+                address = address,
             )
         }
 
@@ -157,7 +151,7 @@ class ForecastMappers {
                 datetimeEpoch = datetimeEpoch,
                 temp = temp,
                 feelsLike = feelsLike,
-                humidity= humidity,
+                humidity = humidity,
                 dew = dew,
                 precip = precip,
                 precipProb = precipProb,

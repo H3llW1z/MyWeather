@@ -6,8 +6,8 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "current_condition")
 data class CurrentConditionsDbModel(
     @PrimaryKey(autoGenerate = false)
-    val datetimeEpoch: Int,
-    val cityName: String,
+    val datetimeEpoch: Long,
+    val address: String,
     val datetime: String,
     val temp: Double,
     val feelsLike: Double,
