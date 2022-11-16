@@ -1,15 +1,16 @@
 package com.example.myweather.data.implementation
 
 import android.app.Application
-import android.provider.MediaStore.Audio.Media
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.Transformations
 import com.example.myweather.data.api.ApiFactory
 import com.example.myweather.data.db.AppDatabase
-import com.example.myweather.data.mappers.ForecastMappers.Companion.toDbModel
-import com.example.myweather.data.mappers.ForecastMappers.Companion.toEntity
+import com.example.myweather.data.implementation.exceptions.AuthorizationErrorException
+import com.example.myweather.data.implementation.exceptions.ClientErrorException
+import com.example.myweather.data.implementation.exceptions.NetworkFailureException
+import com.example.myweather.data.implementation.exceptions.ServerErrorException
+import com.example.myweather.data.mappers.toDbModel
+import com.example.myweather.data.mappers.toEntity
 import com.example.myweather.domain.entity.CurrentConditions
 import com.example.myweather.domain.entity.DailyForecast
 import com.example.myweather.domain.entity.HourlyForecast
@@ -31,7 +32,7 @@ class WeatherRepositoryImpl(application: Application) : WeatherRepository {
     override fun getCurrentForecast(): LiveData<CurrentConditions> =
         MediatorLiveData<CurrentConditions>().apply {
             addSource(forecastDao.getCurrentCondition()) {
-                if (it !=null) {
+                if (it != null) {
                     value = it.toEntity()
                 }
             }
@@ -48,33 +49,38 @@ class WeatherRepositoryImpl(application: Application) : WeatherRepository {
 
     override suspend fun loadData(cityName: String) {
 
-        try {
-            val todayResponse = apiService.getCurrentAndHourlyForecast(cityName)
-            if (todayResponse.isSuccessful) {
-                val address = todayResponse.body()?.resolvedAddress ?: ""
-                val currentConditions = todayResponse.body()?.currentConditions?.toDbModel(address)
-                    ?: throw RuntimeException("Current conditions requested but not exists.")
-
-                forecastDao.removeAndInsertCurrentCondition(currentConditions)
-
-                val hourlyForecast = todayResponse.body()?.days?.get(0)?.hours?.map { it.toDbModel() }
-                    ?: throw RuntimeException("Hourly forecast requested but not exists.")
-
-                forecastDao.removeAndInsertForecastForToday(hourlyForecast)
-            }
-        } catch (e: Exception){
-            Log.e("REPO_ERROR", e.message ?: "no message")
+        val todayResponse = apiService.getCurrentAndHourlyForecast(cityName)
+        if (!todayResponse.isSuccessful) {
+            throw mapHttpCodeToException(todayResponse.code())
         }
 
-        try {
-            val weeklyResponse = apiService.getWeeklyForecast(cityName)
-            if (weeklyResponse.isSuccessful) {
-                val weeklyForecast = weeklyResponse.body()?.days?.map { it.toDbModel() }
-                    ?: throw RuntimeException("Weekly forecast requested but not exists.")
-                forecastDao.removeAndInsertForecastForWeek(weeklyForecast)
-            }
-        } catch (e: Exception) {
-            Log.e("REPO_ERROR", e.message ?: "no message")
+        val address = todayResponse.body()?.resolvedAddress ?: ""
+        val currentConditions = todayResponse.body()?.currentConditions?.toDbModel(address)
+            ?: throw RuntimeException("Current conditions requested but not exists.")
+
+        forecastDao.removeAndInsertCurrentCondition(currentConditions)
+        val hourlyForecast = todayResponse.body()?.days?.get(0)?.hours?.map { it.toDbModel() }
+            ?: throw RuntimeException("Hourly forecast requested but not exists.")
+
+        forecastDao.removeAndInsertForecastForToday(hourlyForecast)
+
+        val weeklyResponse = apiService.getWeeklyForecast(cityName)
+
+        if(!weeklyResponse.isSuccessful) {
+            throw mapHttpCodeToException(weeklyResponse.code())
+        }
+
+        val weeklyForecast = weeklyResponse.body()?.days?.map { it.toDbModel() }
+            ?: throw RuntimeException("Weekly forecast requested but not exists.")
+        forecastDao.removeAndInsertForecastForWeek(weeklyForecast)
+    }
+
+    private fun mapHttpCodeToException(code: Int): Exception {
+        return when (code) {
+            401, 403 -> AuthorizationErrorException()
+            in 400..451 -> ClientErrorException()
+            in 500..526 -> ServerErrorException()
+            else -> NetworkFailureException()
         }
     }
 }

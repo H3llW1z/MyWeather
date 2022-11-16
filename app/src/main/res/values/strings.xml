@@ -22,4 +22,9 @@
     <string name="precip_count_template">%s мм</string>
     <string name="precip_prob_template">%s\%%</string>
     <string name="visibility_template">%s км</string>
+    <string name="day_night_temperature_template">%s°/%s°</string>
+    <string name="check_network_connection">Проверьте подключение к интернету</string>
+    <string name="try_again">Попробовать снова</string>
+    <string name="server_error_occured">Произошла ошибка сервера</string>
+    <string name="last_update_time">данные обновлены %s</string>
 </resources>

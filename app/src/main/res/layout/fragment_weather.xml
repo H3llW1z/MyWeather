@@ -50,6 +50,7 @@
             android:id="@+id/iv_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
             android:contentDescription="@string/current_weather_image"
             app:layout_constraintBottom_toBottomOf="@+id/tvCurrentTemp"
             app:layout_constraintEnd_toStartOf="@id/tvCurrentTemp"
@@ -84,7 +85,7 @@
             style="@style/CardViewCommonStyle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_description">
+            app:layout_constraintTop_toBottomOf="@+id/tv_last_updated">
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -487,6 +488,16 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/tv_last_updated"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/commonTextColor"
+            app:layout_constraintTop_toBottomOf="@id/tv_description"
+            app:layout_constraintStart_toStartOf="@+id/cv_hourly_forecast"
+            tools:text="обновлено 15 ноября в 00:00" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
