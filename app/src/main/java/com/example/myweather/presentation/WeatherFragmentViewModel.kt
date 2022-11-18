@@ -1,13 +1,8 @@
 package com.example.myweather.presentation
 
 import android.app.Application
-import android.content.Context
-import android.content.pm.PackageManager
 import android.location.Geocoder
-import android.location.LocationManager
 import android.util.Log
-import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
