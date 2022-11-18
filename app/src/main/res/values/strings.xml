@@ -1,8 +1,6 @@
 <resources>
-    <string name="app_name">My Weather</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="current_weather_image">Current weather image</string>
+    <string name="app_name">Weather App</string>
+    <string name="current_weather_image">Изображение текущей погоды</string>
     <string name="forecast_for_today">Прогноз на сегодня</string>
     <string name="forecast_for_week">Прогноз на неделю</string>
     <string name="humidity">Относительная влажность</string>
@@ -14,17 +12,23 @@
     <string name="uv_index">УФ-индекс</string>
     <string name="sunrise">Восход</string>
     <string name="sunset">Закат</string>
-    <string name="temperature_template">%s°C</string>
+    <string name="temperature_template" translatable="false">%s°C</string>
     <string name="feels_like_temperature_template">ощущается как %s°C</string>
-    <string name="humidity_template">%s\%%</string>
+    <string name="humidity_template" translatable="false">%s\%%</string>
     <string name="pressure_template">%s ГПа</string>
     <string name="wind_speed_template">%s км/ч</string>
     <string name="precip_count_template">%s мм</string>
-    <string name="precip_prob_template">%s\%%</string>
+    <string name="precip_prob_template" translatable="false">%s\%%</string>
     <string name="visibility_template">%s км</string>
-    <string name="day_night_temperature_template">%s°/%s°</string>
-    <string name="check_network_connection">Проверьте подключение к интернету</string>
+    <string name="day_night_temperature_template" translatable="false">%s°/%s°</string>
+    <string name="check_network_connection">Проверьте подключение к интернету.</string>
     <string name="try_again">Попробовать снова</string>
-    <string name="server_error_occured">Произошла ошибка сервера</string>
-    <string name="last_update_time">данные обновлены %s</string>
+    <string name="server_error_occurred">Произошла ошибка сервера.</string>
+    <string name="last_update_time">данные были обновлены %s</string>
+    <string name="enter_city_name">Введите город</string>
+    <string name="please_turn_on_location">Пожалуйста, включите местоположение.</string>
+    <string name="search_for_forecast_in_other_city">Поиск погоды в другом городе.</string>
+    <string name="search_forecast_via_location">Загрузить погоду по локации.</string>
+    <string name="unknown_location_check_city_name">Неизвестная локация. Проверьте название города</string>
+    <string name="give_location_permission_please">Для поиска по локации выдайте приложению разрешение в настройках.</string>
 </resources>

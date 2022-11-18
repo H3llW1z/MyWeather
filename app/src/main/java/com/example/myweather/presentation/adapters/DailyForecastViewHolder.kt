@@ -6,7 +6,6 @@ import com.example.myweather.R
 import com.example.myweather.databinding.DailyWeatherItemBinding
 import com.example.myweather.domain.entity.DailyForecast
 import com.example.myweather.presentation.mapIconIdToResId
-import java.sql.Timestamp
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.roundToInt
@@ -18,11 +17,11 @@ class DailyForecastViewHolder(
         with(binding) {
             val icon =
                 ResourcesCompat.getDrawable(root.resources, mapIconIdToResId(item.icon), null)
-            ivWeatherIcon.setImageDrawable(icon)
-            tvDescription.isSelected = true
-            tvDayOfWeek.text = convertTimestampToDayOfWeek(item.datetimeEpoch)
-            tvDescription.text = item.description
-            tvDayNightTemp.text = String.format(
+            imageViewWeatherIcon.setImageDrawable(icon)
+            textViewDescription.isSelected = true
+            textViewDayOfWeek.text = convertTimestampToDayOfWeek(item.datetimeEpoch)
+            textViewDescription.text = item.description
+            textViewDayNightTemp.text = String.format(
                 Locale.getDefault(),
                 binding.root.resources.getString(R.string.day_night_temperature_template),
                 item.tempMin.roundToInt(),
@@ -33,5 +32,6 @@ class DailyForecastViewHolder(
 
     private fun convertTimestampToDayOfWeek(timestamp: Long): String {
         return SimpleDateFormat("EE", Locale.getDefault()).format(timestamp * 1000)
+            .replaceFirstChar { it.uppercase() }
     }
 }

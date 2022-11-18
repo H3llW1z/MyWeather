@@ -31,7 +31,7 @@ class WeatherRepositoryImpl(application: Application) : WeatherRepository {
 
     override fun getCurrentForecast(): LiveData<CurrentConditions> =
         MediatorLiveData<CurrentConditions>().apply {
-            addSource(forecastDao.getCurrentCondition()) {
+            addSource(forecastDao.getCurrentConditions()) {
                 if (it != null) {
                     value = it.toEntity()
                 }
@@ -47,8 +47,7 @@ class WeatherRepositoryImpl(application: Application) : WeatherRepository {
             }
         }
 
-    override suspend fun loadData(cityName: String) {
-
+    override suspend fun loadDataByCityName(cityName: String) {
         val todayResponse = apiService.getCurrentAndHourlyForecast(cityName)
         if (!todayResponse.isSuccessful) {
             throw mapHttpCodeToException(todayResponse.code())

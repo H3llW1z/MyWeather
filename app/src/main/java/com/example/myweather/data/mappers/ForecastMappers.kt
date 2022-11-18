@@ -28,8 +28,8 @@ fun CurrentConditionsDto.toDbModel(address: String): CurrentConditionsDbModel {
         uvIndex = uvIndex,
         conditions = conditions ?: "unknown",
         icon = icon ?: "unknown icon",
-        sunrise = sunrise ?: "unknown time",
-        sunset = sunset ?: "unknown time",
+        sunrise = sunrise ?: "--:--:--",
+        sunset = sunset ?: "--:--:--",
         moonPhase = moonPhase,
         address = address
     )
@@ -56,8 +56,8 @@ fun DayDto.toDbModel(): DayForecastDbModel {
         cloudCover = cloudCover,
         visibility = visibility,
         uvIndex = uvIndex,
-        sunrise = sunrise ?: "unknown time",
-        sunset = sunset ?: "unknown time",
+        sunrise = sunrise ?: "--:--:--",
+        sunset = sunset ?: "--:--:--",
         moonPhase = moonPhase,
         conditions = conditions ?: "unknown",
         description = description ?: "no description",

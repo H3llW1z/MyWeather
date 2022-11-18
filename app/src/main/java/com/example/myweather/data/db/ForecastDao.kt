@@ -12,8 +12,8 @@ import com.example.myweather.data.db.model.HourForecastDbModel
 
 @Dao
 interface ForecastDao {
-    @Query("SELECT * FROM current_condition LIMIT 1")
-    fun getCurrentCondition(): LiveData<CurrentConditionsDbModel>
+    @Query("SELECT * FROM current_conditions LIMIT 1")
+    fun getCurrentConditions(): LiveData<CurrentConditionsDbModel>
 
     @Query("SELECT * FROM hour_forecast ORDER BY datetimeEpoch ASC")
     fun getForecastForToday(): LiveData<List<HourForecastDbModel>>
@@ -22,7 +22,7 @@ interface ForecastDao {
     fun getForecastForWeek(): LiveData<List<DayForecastDbModel>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertCurrentCondition(data: CurrentConditionsDbModel)
+    suspend fun insertCurrentConditions(data: CurrentConditionsDbModel)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertForecastForToday(data: List<HourForecastDbModel>)
@@ -30,8 +30,8 @@ interface ForecastDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertForecastForWeek(data: List<DayForecastDbModel>)
 
-    @Query("DELETE FROM current_condition")
-    suspend fun removeOldCurrentCondition()
+    @Query("DELETE FROM current_conditions")
+    suspend fun removeOldCurrentConditions()
 
     @Query("DELETE FROM hour_forecast")
     suspend fun removeOldForecastForToday()
@@ -41,8 +41,8 @@ interface ForecastDao {
 
     @Transaction
     suspend fun removeAndInsertCurrentCondition(data: CurrentConditionsDbModel) {
-        removeOldCurrentCondition()
-        insertCurrentCondition(data)
+        removeOldCurrentConditions()
+        insertCurrentConditions(data)
     }
 
     @Transaction

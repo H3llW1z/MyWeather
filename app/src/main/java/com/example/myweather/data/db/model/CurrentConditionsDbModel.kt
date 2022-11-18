@@ -3,7 +3,7 @@ package com.example.myweather.data.db.model
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "current_condition")
+@Entity(tableName = "current_conditions")
 data class CurrentConditionsDbModel(
     @PrimaryKey(autoGenerate = false)
     val datetimeEpoch: Long,

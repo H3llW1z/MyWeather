@@ -1,7 +1,13 @@
 package com.example.myweather.presentation
 
 import android.app.Application
+import android.content.Context
+import android.content.pm.PackageManager
+import android.location.Geocoder
+import android.location.LocationManager
 import android.util.Log
+import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -11,17 +17,18 @@ import com.example.myweather.data.implementation.exceptions.AuthorizationErrorEx
 import com.example.myweather.data.implementation.exceptions.ClientErrorException
 import com.example.myweather.data.implementation.exceptions.NetworkFailureException
 import com.example.myweather.data.implementation.exceptions.ServerErrorException
-import com.example.myweather.domain.usecases.GetCurrentForecastUseCase
-import com.example.myweather.domain.usecases.GetTodayHourlyForecastUseCase
-import com.example.myweather.domain.usecases.GetWeeklyForecastUseCase
-import com.example.myweather.domain.usecases.LoadDataUseCase
+import com.example.myweather.domain.usecases.*
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.net.UnknownHostException
+import java.util.*
 
 class WeatherFragmentViewModel(application: Application) : AndroidViewModel(application) {
+
     private val repository = WeatherRepositoryImpl(application)
 
-    private val loadDataUseCase = LoadDataUseCase(repository)
+    private val loadDataByCityNameUseCase = LoadDataByCityNameUseCase(repository)
     private val getCurrentForecastUseCase = GetCurrentForecastUseCase(repository)
     private val getHourlyForecastUseCase = GetTodayHourlyForecastUseCase(repository)
     private val getWeeklyForecastUseCase = GetWeeklyForecastUseCase(repository)
@@ -42,14 +49,10 @@ class WeatherFragmentViewModel(application: Application) : AndroidViewModel(appl
     val serverError: LiveData<Unit>
         get() = _serverError
 
-    private val _authError = MutableLiveData<Unit>()
-    val authError: LiveData<Unit>
-        get() = _authError
-
-    fun loadData(cityName: String) {
+    fun loadDataByCityName(cityName: String) {
         viewModelScope.launch {
             try {
-                loadDataUseCase(cityName)
+                loadDataByCityNameUseCase(cityName)
             } catch (e: AuthorizationErrorException) {
                 Log.e("REPO_ERROR", "Auth error")
             } catch (e: ClientErrorException) {
@@ -68,4 +71,26 @@ class WeatherFragmentViewModel(application: Application) : AndroidViewModel(appl
         }
     }
 
+    @Suppress("DEPRECATION")
+    fun loadDataByCoordinates(latitude: Double, longitude: Double) {
+        viewModelScope.launch {
+            val geocoder = Geocoder(getApplication(), Locale.getDefault())
+            try {
+                val address = withContext(Dispatchers.IO) {
+                    geocoder.getFromLocation(
+                        latitude,
+                        longitude,
+                        1,
+                    )
+                }
+                address?.let {
+                    if (it.size > 0) {
+                        loadDataByCityName(it[0].locality)
+                    }
+                }
+            } catch (e: Exception) {
+                _networkError.postValue(Unit)
+            }
+        }
+    }
 }

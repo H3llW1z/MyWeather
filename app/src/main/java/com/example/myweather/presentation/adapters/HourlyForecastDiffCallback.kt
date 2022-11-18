@@ -5,7 +5,7 @@ import com.example.myweather.domain.entity.HourlyForecast
 
 class HourlyForecastDiffCallback: DiffUtil.ItemCallback<HourlyForecast>() {
     override fun areItemsTheSame(oldItem: HourlyForecast, newItem: HourlyForecast): Boolean {
-        return oldItem.datetimeEpoch == newItem.datetimeEpoch
+        return oldItem.datetime == newItem.datetime
     }
 
     override fun areContentsTheSame(oldItem: HourlyForecast, newItem: HourlyForecast): Boolean {

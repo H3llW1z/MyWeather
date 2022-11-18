@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Weather App</string>
+    <string name="current_weather_image">Current weather image</string>
+    <string name="forecast_for_today">Forecast for today</string>
+    <string name="forecast_for_week">Forecast for week</string>
+    <string name="humidity">Humidity</string>
+    <string name="pressure">Pressuse</string>
+    <string name="wind_speed">Wind speed</string>
+    <string name="precip">Precipitation amount</string>
+    <string name="precip_prob">Probability of precipitation</string>
+    <string name="visibility">Visibility</string>
+    <string name="uv_index">UV-index</string>
+    <string name="sunrise">Sunrise</string>
+    <string name="sunset">Sunset</string>
+    <string name="feels_like_temperature_template">feels like %s°C</string>
+    <string name="pressure_template">%s GPa</string>
+    <string name="wind_speed_template">%s km/h</string>
+    <string name="precip_count_template">%s mm</string>
+    <string name="visibility_template">%s km</string>
+    <string name="check_network_connection">Check internet connection.</string>
+    <string name="try_again">Try again.</string>
+    <string name="server_error_occurred">Server error occurred.</string>
+    <string name="last_update_time">the data has been updated %s</string>
+    <string name="enter_city_name">Enter the city</string>
+    <string name="please_turn_on_location">Please turn on the location.</string>
+    <string name="search_for_forecast_in_other_city">Search for weather in another city.</string>
+    <string name="search_forecast_via_location">Load weather by location.</string>
+    <string name="unknown_location_check_city_name">Unknown location. Check the name of the city please.</string>
+    <string name="give_location_permission_please">To search by location, give the app permission in the settings.</string>
+</resources>

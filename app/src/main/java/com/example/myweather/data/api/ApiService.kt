@@ -5,23 +5,24 @@ import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
+import java.util.*
 
 interface ApiService {
 
-    @GET("{cityName}/today?$QUERY_PARAM_INCLUDE=$HOURS%2C$CURRENT")
+    @GET("{location}/today?$QUERY_PARAM_INCLUDE=$HOURS%2C$CURRENT")
     suspend fun getCurrentAndHourlyForecast(
-        @Path("cityName") cityName: String,
+        @Path("location") location: String,
         @Query(QUERY_PARAM_API_KEY) apiKey: String = API_KEY,
         @Query(QUERY_PARAM_UNIT_GROUP) unitGroup: String = UNIT_GROUP,
-        @Query(QUERY_PARAM_LANGUAGE) language: String = LANGUAGE
+        @Query(QUERY_PARAM_LANGUAGE) language: String = Locale.getDefault().language
     ): Response<WeatherResponse>
 
-    @GET("{cityName}/next7days?$QUERY_PARAM_INCLUDE=$DAYS")
+    @GET("{location}/next7days?$QUERY_PARAM_INCLUDE=$DAYS")
     suspend fun getWeeklyForecast(
-        @Path("cityName") cityName: String,
+        @Path("location") location: String,
         @Query(QUERY_PARAM_API_KEY) apiKey: String = API_KEY,
         @Query(QUERY_PARAM_UNIT_GROUP) unitGroup: String = UNIT_GROUP,
-        @Query(QUERY_PARAM_LANGUAGE) language: String = LANGUAGE
+        @Query(QUERY_PARAM_LANGUAGE) language: String = Locale.getDefault().language
     ): Response<WeatherResponse>
 
     companion object {
@@ -34,8 +35,6 @@ interface ApiService {
         private const val HOURS = "hours"
         private const val CURRENT = "current"
         private const val DAYS = "days"
-
-        private const val LANGUAGE = "ru"
         private const val UNIT_GROUP = "metric"
     }
 }

@@ -13,5 +13,6 @@ interface WeatherRepository {
 
     fun getWeeklyForecast(): LiveData<List<DailyForecast>>
 
-    suspend fun loadData(cityName: String)
+    suspend fun loadDataByCityName(cityName: String)
+
 }
